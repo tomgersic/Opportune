@@ -1,7 +1,141 @@
 <!DOCTYPE html>
 <html>
-  <head>
-  </head>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<link rel="stylesheet" href="css/ratchet.css"/>
+
+		<script src="jquery/jquery-2.0.0.min.js"></script>
+		<script src="backbone/underscore-1.4.4.min.js"></script>
+		<script src="backbone/backbone-1.0.0.min.js"></script>
+		<script src="cordova-2.3.0.js"></script>
+		<script src="forcetk.mobilesdk.js"></script>
+		<script src="cordova.force.js"></script>
+		<script src="smartsync.js"></script>
+	</head>
   <body>
-  </body>
+  	<div id="content"></div>
+  	<!-- 
+  		Templates 
+  	-->
+  	<!-- Search Page -->
+  	<script id="search-page" type="text/template">
+			<header class="bar-title">
+				<h1 class="title">Users</h1>
+			</header>
+			<div class="bar-standard bar-header-secondary">
+				<input type="search" class="search-key" placeholder="Search"/>
+			</div>
+			<div class="content">
+				<ul class="list"></ul>
+			</div>
+  	</script>
+
+		<!-- List Item -->
+		<script id="user-list-item" type="text/template">
+			<img src="<%= SmallPhotoUrl %>" class="small-img" />
+			<div class="details-short">
+				<b><%= FirstName %> <%= LastName %></b><br/>
+				Title<%= Title %>
+			</div>
+		</script>
+
+  	<!-- App Init -->
+  	<script>
+			var app = {
+				models: {},
+				views: {}
+			}
+
+			//JQuery is ready, listen for Cordova Device Ready
+			jQuery(document).ready(function() {
+    		document.addEventListener("deviceready", onDeviceReady,false);
+			});
+			
+			//Device is ready, call appStart
+			function onDeviceReady() {
+    		cordova.require("salesforce/plugin/oauth").getAuthCredentials(appStart);
+			}
+
+			function appStart(creds) {
+    		Force.init(creds, null, null, cordova.require("salesforce/plugin/oauth").forcetkRefresh);
+    		app.router = new app.Router();
+    		Backbone.history.start();
+			}
+
+			/**
+			 * Models
+			 **/
+
+			//Define the User Model
+			app.models.User = Force.SObject.extend({
+    		sobjectType: "User",
+    		fieldlist: ["Id", "FirstName", "LastName", "SmallPhotoUrl", "Title", "Email","MobilePhone","City"]
+			});
+
+			//Define the User Collection
+			app.models.UserCollection = Force.SObjectCollection.extend({
+    		model: app.models.User
+			});
+
+			/**
+			 * Views
+			 **/
+			//search page
+			app.views.SearchPage = Backbone.View.extend({
+			 	template: _.template($("#search-page").html()),
+				initialize: function() {
+					this.listView = new app.views.UserListView({model: this.model});
+				},
+				render: function(eventName) {
+					$(this.el).html(this.template());
+					$(".search-key", this.el).val(this.model.criteria);
+					this.listView.setElement($("ul", this.el)).render();
+					return this;
+				},	
+				events: {
+					"keyup .search-key": "search"
+				},
+				search: function(event) {
+					this.model.criteria = $(".search-key", this.el).val();
+					var soql = "SELECT Id, FirstName, LastName, SmallPhotoUrl, Title FROM User WHERE Name like '" + this.model.criteria + "%' ORDER BY Name LIMIT 25 ";
+					this.model.fetch({config: {type:"soql", query:soql}});
+				}				
+			});
+
+			//results list view
+			app.views.UserListView = Backbone.View.extend({
+				listItemViews: [],
+				initialize: function() {
+					this.model.bind("reset", this.render, this);
+				},
+￼				render: function(eventName) {
+ 					_.each(this.listItemViews, function(itemView) { itemView.close(); });
+
+					this.listItemViews = _.map(this.model.models, function(model) { 
+						return new app.views.UserListItemView({model: model});
+					});
+
+					$(this.el).append(_.map(this.listItemViews, function(itemView) {
+						return itemView.render().el;
+					}));
+					
+					return this;
+				}
+			});
+
+			app.views.UserListItemView = Backbone.View.extend({
+				tagName: "li",
+				template: _.template($("#user-list-item").html()),
+				render: function(eventName) {
+					$(this.el).html(this.template(this.model.toJSON()));
+					return this;
+				},
+				close: function() {
+					this.remove();
+					this.off();
+				}
+			});
+		</script>
+	</body>
 </html>

@@ -79,8 +79,8 @@
 			<a href="#edit/opportunities/<%= Id %>">
 				<div>
 					<span class="important"><%= Name %></span><br/>
-					<%= Amount %><br/>
-					<span class="not-important"><%= Id %></span><br/>
+					$<%= Amount %><br/>
+					<span class="not-important"><%= StageName %></span><br/>
 					<% if (__sync_failed__) { %>
 					<span class="count-negative">Failed to sync</span>
 					<% } else if (__local__) { %>

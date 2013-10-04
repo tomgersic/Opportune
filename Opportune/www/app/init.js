@@ -19,6 +19,8 @@ function onDeviceReady() {
 	//Call getAuthCredentials to get the initial session credentials
     cordova.require("salesforce/plugin/oauth").getAuthCredentials(
         function(creds) {
+            console.log("Creds");
+            console.log(creds);
             appStart( _.extend(creds, {userAgent: navigator.userAgent}) );
         }, 
         function(error) { 
@@ -38,3 +40,5 @@ function appStart(creds)
     // Go!
     Backbone.history.start();
 }
+
+

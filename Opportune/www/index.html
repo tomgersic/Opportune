@@ -4,6 +4,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 		<link rel="stylesheet" href="css/ratchet.css"/>
+		<script type="text/javascript">
+    window.onerror = function(message, url, lineNumber) {
+        console.log("Error: "+message+" in "+url+" at line "+lineNumber);
+    }
+		</script>
 		<!-- Libs -->
 		<script src="lib/jquery/jquery-2.0.0.min.js"></script>
 		<script src="lib/backbone/underscore-1.4.4.min.js"></script>
@@ -16,132 +21,141 @@
 		<script src="lib/stackrouter.js"></script>
 		
 		<!-- App -->
-		<script src="init.js"></script>
-		<script src="app/models/OfflineTracker.js"></script>
+		<script src="app/init.js"></script>
 	</head>
-  <body>
-  	<div id="content"></div>
-  	<!-- 
-  		Templates 
-  	-->
-  	<!-- Search Page -->
-  	<script id="search-page" type="text/template">
+	<body>
+		<div id="content"></div>
+		<!-- 
+			Templates 
+		-->
+
+		<!-- Search page template -->
+		<script id="search-page" type="text/template">
 			<header class="bar-title">
-				<h1 class="title">Users</h1>
+				<h1 class="title">Accounts</h1>
+				<a class="button" href="#add">Create</a>
 			</header>
+			<footer class="bar-footer">
+				<span id="offlineStatus"></span>
+			</footer>
+
 			<div class="bar-standard bar-header-secondary">
 				<input type="search" class="search-key" placeholder="Search"/>
 			</div>
+
 			<div class="content">
 				<ul class="list"></ul>
 			</div>
-  	</script>
+		</script>
 
-		<!-- List Item -->
-		<script id="user-list-item" type="text/template">
-			<img src="<%= SmallPhotoUrl %>" class="small-img" />
-			<div class="details-short">
-				<b><%= FirstName %> <%= LastName %></b><br/>
-				Title<%= Title %>
+		<!-- Online/Offline Toggler Template -->
+		<script id="offline-toggler" type="text/template">
+			<a class="<%= isOnline ? 'button-positive' : 'button-negative' %>"><%= (isOnline ? "Online" : "Offline") %></a>
+		</script>
+
+		<!-- Sync Page Template -->
+		<script id="sync-page" type="text/template">
+			<header class="bar-title">
+				<a class="button-prev">Back</a>
+				<h1 class="title">Sync</h1>
+			</header>
+
+			<footer class="bar-footer">
+				<span class="button-positive">Online</span>
+			</footer>
+
+			<div class="bar-standard bar-header-secondary">
+				<a class="button button-block sync">Process <%= countLocallyModified %> records</a>
+			</div>
+
+			<div class="content">
+				<ul class="list"></ul>
 			</div>
 		</script>
 
-  	<!-- App Init -->
-  	<script>
-
-			/**
-			 * Models
-			 **/
-
-			//Define the User Model
-			app.models.User = Force.SObject.extend({
-    		sobjectType: "User",
-    		fieldlist: ["Id", "FirstName", "LastName", "SmallPhotoUrl", "Title", "Email","MobilePhone","City"]
-			});
-
-			//Define the User Collection
-			app.models.UserCollection = Force.SObjectCollection.extend({
-    		model: app.models.User
-			});
-
-			/**
-			 * Views
-			 **/
-			//search page
-			app.views.SearchPage = Backbone.View.extend({
-			 	template: _.template($("#search-page").html()),
-				initialize: function() {
-					this.listView = new app.views.UserListView({model: this.model});
-				},
-				render: function(eventName) {
-					$(this.el).html(this.template());
-					$(".search-key", this.el).val(this.model.criteria);
-					this.listView.setElement($("ul", this.el)).render();
-					return this;
-				},	
-				events: {
-					"keyup .search-key": "search"
-				},
-				search: function(event) {
-					this.model.criteria = $(".search-key", this.el).val();
-					var soql = "SELECT Id, FirstName, LastName, SmallPhotoUrl, Title FROM User WHERE Name like '" + this.model.criteria + "%' ORDER BY Name LIMIT 25 ";
-					this.model.fetch({config: {type:"soql", query:soql}});
-				}				
-			});
-
-			//results list view
-			app.views.UserListView = Backbone.View.extend({
-				listItemViews: [],
-				initialize: function() {
-					this.model.bind("reset", this.render, this);
-				},
-				render: function(eventName) {
- 					_.each(this.listItemViews, function(itemView) { itemView.close(); });
-
-					this.listItemViews = _.map(this.model.models, function(model) { 
-						return new app.views.UserListItemView({model: model});
-					});
-
-					$(this.el).append(_.map(this.listItemViews, function(itemView) {
-						return itemView.render().el;
-					}));
-					
-					return this;
-				}
-			});
-
-			app.views.UserListItemView = Backbone.View.extend({
-				tagName: "li",
-				template: _.template($("#user-list-item").html()),
-				render: function(eventName) {
-					$(this.el).html(this.template(this.model.toJSON()));
-					return this;
-				},
-				close: function() {
-					this.remove();
-					this.off();
-				}
-			});
-
-			/**
-			 * Router
-			 **/
-
-			app.Router = Backbone.Router.extend({
-				routes: {
-    			"": "list"
-				},
-				initialize: function() {
-    			Backbone.Router.prototype.initialize.call(this);
-    			// Collection behind search screen
-    			app.searchResults = new app.models.UserCollection();
-    			app.searchView = new app.views.SearchPage({model: app.searchResults});
-				},
-				list: function() {
-					app.searchResults.fetch();
-					$('#content').html(app.searchView.render().el);
-				}
-			});
+		<!-- Account list item Template -->
+		<script id="account-list-item" type="text/template">
+			<a href="#edit/accounts/<%= Id %>">
+				<div>
+					<span class="important"><%= Name %></span><br/>
+					<%= Industry %><br/>
+					<span class="not-important"><%= Id %></span><br/>
+					<% if (__sync_failed__) { %>
+					<span class="count-negative">Failed to sync</span>
+					<% } else if (__local__) { %>
+					<span class="count-main">Locally<%= (__locally_created__ ? " created" : "") + (__locally_updated__ ? " updated" : "") + (__locally_deleted__ ? " deleted" : "") %></span>
+					<% } else { %>
+					<span class="count-positive">Cached</span>
+					<% } %>
+				</div>
+			</a>
 		</script>
+
+		<!-- Add/edit account page template -->
+		<script id="edit-account-page" type="text/template">
+			<header class="bar-title">
+				<a class="button-prev">Back</a>
+				<h1 class="title"><%= action %> Account</h1>
+				<a class="button toggleDelete">Delete</a>
+			</header>
+
+			<footer class="bar-footer">
+				<span id="offlineStatus"></span>
+			</footer>
+
+			<div class="content">
+				<div class="content-padded">
+
+					<% if (__local__) { %>
+					<span class="count-main">Locally<%= (__locally_created__ ? " created" : "") + (__locally_updated__ ? " updated" : "") + (__locally_deleted__ ? " deleted" : "") %></span><br/><br/>
+					<% } %>
+
+					<div class="input-group">
+						<div class="input-row" id="accountName">
+							<label>Name</label>
+							<input type="text" name="Name" value="<%= Name %>" />
+							<span class="error" id="accountNameError" />
+						</div>
+						<div class="input-row" id="accountIndustry">
+							<label>Industry</label>
+							<input type="text" name="Industry" value="<%= Industry %>" />
+							<span class="error" id="accountIndustryError" />
+						</div>
+						<div class="input-row" id="accountPhone">
+							<label>Phone</label>
+							<input type="text" name="Phone" value="<%= Phone %>" />
+							<span class="error" id="accountPhoneError" />
+						</div>
+						<% if (LastModifiedDate) { %>
+						<div class="input-row">
+							<label>Owner</label>
+							<input type="text" value="<%= Owner.Name %>" readonly />
+						</div>
+						<div class="input-row">
+							<label>Last Modified</label>
+							<input type="text" value="<%= LastModifiedBy.Name + ' on ' + LastModifiedDate %>" readonly />
+						</div>
+						<% } %>
+					</div>
+					<a class="button save">Save</a>
+					<a class="button merge">Merge</a>
+					<a class="button overwrite">Overwrite</a>
+				</div>
+			</div>
+		</script>
+
+		<!--Models-->
+		<script src="app/models/OfflineTracker.js"></script>
+		<script src="app/models/Opportunity.js"></script>
+		<script src="app/models/OpportunityCollection.js"></script>
+		<!--Views-->
+		<script src="app/views/EditOpportunityPage.js"></script>
+		<script src="app/views/OfflineToggler.js"></script>
+		<script src="app/views/OpportunityList.js"></script>
+		<script src="app/views/OpportunityListItem.js"></script>
+		<script src="app/views/SearchPage.js"></script>
+		<script src="app/views/SyncPage.js"></script>
+
+		<script src="app/Router.js"></script>
 	</body>
 </html>

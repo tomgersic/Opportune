@@ -4,14 +4,20 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 		<link rel="stylesheet" href="css/ratchet.css"/>
-
-		<script src="jquery/jquery-2.0.0.min.js"></script>
-		<script src="backbone/underscore-1.4.4.min.js"></script>
-		<script src="backbone/backbone-1.0.0.min.js"></script>
-		<script src="cordova-2.3.0.js"></script>
-		<script src="forcetk.mobilesdk.js"></script>
-		<script src="cordova.force.js"></script>
-		<script src="smartsync.js"></script>
+		<!-- Libs -->
+		<script src="lib/jquery/jquery-2.0.0.min.js"></script>
+		<script src="lib/backbone/underscore-1.4.4.min.js"></script>
+		<script src="lib/backbone/backbone-1.0.0.min.js"></script>
+		<script src="lib/cordova-2.3.0.js"></script>
+		<script src="lib/forcetk.mobilesdk.js"></script>
+		<script src="lib/cordova.force.js"></script>
+		<script src="lib/smartsync.js"></script>
+		<script src="lib/fastclick.js"></script>
+		<script src="lib/stackrouter.js"></script>
+		
+		<!-- App -->
+		<script src="init.js"></script>
+		<script src="app/models/OfflineTracker.js"></script>
 	</head>
   <body>
   	<div id="content"></div>
@@ -42,26 +48,6 @@
 
   	<!-- App Init -->
   	<script>
-			var app = {
-				models: {},
-				views: {}
-			}
-
-			//JQuery is ready, listen for Cordova Device Ready
-			jQuery(document).ready(function() {
-    		document.addEventListener("deviceready", onDeviceReady,false);
-			});
-			
-			//Device is ready, call appStart
-			function onDeviceReady() {
-    		cordova.require("salesforce/plugin/oauth").getAuthCredentials(appStart);
-			}
-
-			function appStart(creds) {
-    		Force.init(creds, null, null, cordova.require("salesforce/plugin/oauth").forcetkRefresh);
-    		app.router = new app.Router();
-    		Backbone.history.start();
-			}
 
 			/**
 			 * Models

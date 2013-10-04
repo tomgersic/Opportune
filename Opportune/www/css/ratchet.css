@@ -126,7 +126,7 @@ a {
   bottom: 0;
   left: 0;
   overflow: auto;
-  background: #fff;
+  background: #eee;
   -webkit-transition-property: top, bottom;
           transition-property: top, bottom;
   -webkit-transition-duration: .2s, .2s;  
@@ -205,10 +205,10 @@ a {
   top: 0;
   display: -webkit-box;
   display: box;
-  background-color: #CCFF33;
-  background-image: -webkit-linear-gradient(top, #CCFF33 0, #CCFF66 100%);
-  background-image: linear-gradient(to bottom, #CCFF33 0, #CCFF66 100%);
-  border-bottom: 1px solid #CCFF33;
+  background-color: #a0f3f7;
+  background-image: -webkit-linear-gradient(top, #a0f3f7 0, #a0f3f7 100%);
+  background-image: linear-gradient(to bottom, #a0f3f7 0, #a0f3f7 100%);
+  border-bottom: 1px solid #a0f3f7;
   box-shadow: inset 0 1px 1px -1px rgba(255, 255, 255, .8);
   -webkit-box-orient: horizontal;
           box-orient: horizontal;
@@ -226,7 +226,6 @@ a {
   line-height: 44px;
   color: #999;
   text-align: center;
-  text-shadow: 0 -1px rgba(0, 0, 0, .5);
   white-space: nowrap;
 }
 

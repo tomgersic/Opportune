@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 		<link rel="stylesheet" href="css/ratchet.css"/>
 
@@ -109,7 +109,7 @@
 				initialize: function() {
 					this.model.bind("reset", this.render, this);
 				},
-￼				render: function(eventName) {
+				render: function(eventName) {
  					_.each(this.listItemViews, function(itemView) { itemView.close(); });
 
 					this.listItemViews = _.map(this.model.models, function(model) { 
@@ -134,6 +134,26 @@
 				close: function() {
 					this.remove();
 					this.off();
+				}
+			});
+
+			/**
+			 * Router
+			 **/
+
+			app.Router = Backbone.Router.extend({
+				routes: {
+    			"": "list"
+				},
+				initialize: function() {
+    			Backbone.Router.prototype.initialize.call(this);
+    			// Collection behind search screen
+    			app.searchResults = new app.models.UserCollection();
+    			app.searchView = new app.views.SearchPage({model: app.searchResults});
+				},
+				list: function() {
+					app.searchResults.fetch();
+					$('#content').html(app.searchView.render().el);
 				}
 			});
 		</script>

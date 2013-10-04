@@ -32,7 +32,7 @@
 		<!-- Search page template -->
 		<script id="search-page" type="text/template">
 			<header class="bar-title">
-				<h1 class="title">Accounts</h1>
+				<h1 class="title">Opportune</h1>
 				<a class="button" href="#add">Create</a>
 			</header>
 			<footer class="bar-footer">
@@ -73,12 +73,12 @@
 			</div>
 		</script>
 
-		<!-- Account list item Template -->
-		<script id="account-list-item" type="text/template">
-			<a href="#edit/accounts/<%= Id %>">
+		<!-- Opportunity list item Template -->
+		<script id="opportunity-list-item" type="text/template">
+			<a href="#edit/opportunities/<%= Id %>">
 				<div>
 					<span class="important"><%= Name %></span><br/>
-					<%= Industry %><br/>
+					<%= Amount %><br/>
 					<span class="not-important"><%= Id %></span><br/>
 					<% if (__sync_failed__) { %>
 					<span class="count-negative">Failed to sync</span>
@@ -91,11 +91,11 @@
 			</a>
 		</script>
 
-		<!-- Add/edit account page template -->
-		<script id="edit-account-page" type="text/template">
+		<!-- Add/edit opportunity page template -->
+		<script id="edit-opportunity-page" type="text/template">
 			<header class="bar-title">
 				<a class="button-prev">Back</a>
-				<h1 class="title"><%= action %> Account</h1>
+				<h1 class="title"><%= action %> Opportunity</h1>
 				<a class="button toggleDelete">Delete</a>
 			</header>
 
@@ -111,20 +111,20 @@
 					<% } %>
 
 					<div class="input-group">
-						<div class="input-row" id="accountName">
+						<div class="input-row" id="opportunityName">
 							<label>Name</label>
 							<input type="text" name="Name" value="<%= Name %>" />
-							<span class="error" id="accountNameError" />
+							<span class="error" id="opportunityNameError" />
 						</div>
-						<div class="input-row" id="accountIndustry">
-							<label>Industry</label>
-							<input type="text" name="Industry" value="<%= Industry %>" />
-							<span class="error" id="accountIndustryError" />
+						<div class="input-row" id="opportunityAmount">
+							<label>Amount</label>
+							<input type="text" name="Amount" value="<%= Amount %>" />
+							<span class="error" id="opportunityAmountError" />
 						</div>
-						<div class="input-row" id="accountPhone">
-							<label>Phone</label>
-							<input type="text" name="Phone" value="<%= Phone %>" />
-							<span class="error" id="accountPhoneError" />
+						<div class="input-row" id="opportunityStageName">
+							<label>Stage</label>
+							<input type="text" name="StageName" value="<%= StageName %>" />
+							<span class="error" id="opportunityStageNameError" />
 						</div>
 						<% if (LastModifiedDate) { %>
 						<div class="input-row">
@@ -149,12 +149,12 @@
 		<script src="app/models/Opportunity.js"></script>
 		<script src="app/models/OpportunityCollection.js"></script>
 		<!--Views-->
-		<script src="app/views/EditOpportunityPage.js"></script>
-		<script src="app/views/OfflineToggler.js"></script>
+		<script src="app/views/SearchPage.js"></script>
 		<script src="app/views/OpportunityList.js"></script>
 		<script src="app/views/OpportunityListItem.js"></script>
-		<script src="app/views/SearchPage.js"></script>
+		<script src="app/views/OfflineToggler.js"></script>
 		<script src="app/views/SyncPage.js"></script>
+		<script src="app/views/EditOpportunityPage.js"></script>
 
 		<script src="app/Router.js"></script>
 	</body>

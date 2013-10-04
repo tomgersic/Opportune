@@ -42,8 +42,8 @@ app.Router = Backbone.StackRouter.extend({
 
         // We keep a single instance of SearchPage, SyncPage and EditOpportunityPage
         app.searchPage = new app.views.SearchPage({model: app.searchResults});
-/*        app.syncPage = new app.views.SyncPage({model: app.localOpportunities});
-        app.editPage = new app.views.EditOpportunityPage();*/
+        app.syncPage = new app.views.SyncPage({model: app.localOpportunities});
+        app.editPage = new app.views.EditOpportunityPage();
     },
 
     /**

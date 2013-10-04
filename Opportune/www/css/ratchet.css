@@ -205,10 +205,10 @@ a {
   top: 0;
   display: -webkit-box;
   display: box;
-  background-color: #1eb0e9;
-  background-image: -webkit-linear-gradient(top, #1eb0e9 0, #109adc 100%);
-  background-image: linear-gradient(to bottom, #1eb0e9 0, #109adc 100%);
-  border-bottom: 1px solid #0e5895;
+  background-color: #CCFF33;
+  background-image: -webkit-linear-gradient(top, #CCFF33 0, #CCFF66 100%);
+  background-image: linear-gradient(to bottom, #CCFF33 0, #CCFF66 100%);
+  border-bottom: 1px solid #CCFF33;
   box-shadow: inset 0 1px 1px -1px rgba(255, 255, 255, .8);
   -webkit-box-orient: horizontal;
           box-orient: horizontal;
@@ -224,7 +224,7 @@ a {
   font-size: 20px;
   font-weight: bold;
   line-height: 44px;
-  color: #fff;
+  color: #999;
   text-align: center;
   text-shadow: 0 -1px rgba(0, 0, 0, .5);
   white-space: nowrap;
@@ -309,10 +309,10 @@ a {
   line-height: 23px;
   color: #fff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, .3);
-  background-color: #1eb0e9;
-  background-image: -webkit-linear-gradient(top, #1eb0e9 0, #0984c6 100%);
-  background-image: linear-gradient(to bottom, #1eb0e9 0, #0984c6 100%);
-  border: 1px solid #0e5895;
+  background-color: #aaa;
+  background-image: -webkit-linear-gradient(top, #aaa 0, #aaa 100%);
+  background-image: linear-gradient(to bottom, #aaa 0, #aaa 100%);
+  border: 1px solid #aaa;
   box-shadow: 0 1px rgba(255, 255, 255, .25);
   -webkit-box-flex: 0;
           box-flex: 0;
@@ -332,7 +332,7 @@ a {
 /* Override standard button active states */
 .bar-title .button:active {
   color: #fff;
-  background-color: #0876b1;
+  background-color: #aaa;
 }
 
 /* Directional buttons in title bars (thanks to @GregorAdams for solution - http://cssnerd.com/2011/11/30/the-best-pure-css3-ios-style-arrow-back-button/)
@@ -367,22 +367,22 @@ a {
   height: 27px;
   border-radius: 30px 100px 2px 40px / 2px 40px 30px 100px;
   content: '';
-  box-shadow: inset 1px 0 #0e5895, inset 0 1px #0e5895;
+  box-shadow: inset 1px 0 #aaa, inset 0 1px #aaa;
   -webkit-mask-image: -webkit-gradient(linear, left top, right bottom, from(#000), color-stop(.33, #000), color-stop(.5, transparent), to(transparent));
                   mask-image: gradient(linear, left top, right bottom, from(#000), color-stop(.33, #000), color-stop(.5, transparent), to(transparent));
 }
 .bar-title .button-prev:before {
   left: -5px;
-  background-image: -webkit-gradient(linear, left bottom, right top, from(#0984c6), to(#1eb0e9));
-  background-image: gradient(linear, left bottom, right top, from(#0984c6), to(#1eb0e9));
+  background-image: -webkit-gradient(linear, left bottom, right top, from(#aaa), to(#aaa));
+  background-image: gradient(linear, left bottom, right top, from(#aaa), to(#aaa));
   border-left: 1.5px solid rgba(255, 255, 255, .25);
   -webkit-transform: rotate(-45deg) skew(-10deg, -10deg);
           transform: rotate(-45deg) skew(-10deg, -10deg);
 }
 .bar-title .button-next:before {
   right: -5px;
-  background-image: -webkit-gradient(linear, left bottom, right top, from(#1eb0e9), to(#0984c6));
-  background-image: gradient(linear, left bottom, right top, from(#1eb0e9), to(#0984c6));
+  background-image: -webkit-gradient(linear, left bottom, right top, from(#aaa), to(#aaa));
+  background-image: gradient(linear, left bottom, right top, from(#aaa), to(#aaa));
   border-top: 1.5px solid rgba(255, 255, 255, .25);
   -webkit-transform: rotate(135deg) skew(-10deg, -10deg);
           transform: rotate(135deg) skew(-10deg, -10deg);
@@ -394,7 +394,7 @@ a {
 .bar-title .button-prev:active:before,
 .bar-title .button-next:active:before {
   color: #fff;
-  background-color: #0876b1;
+  background-color: #aaa;
   background-image: none;
 }
 .bar-title .button-prev:active:before,
@@ -768,26 +768,26 @@ select {
 
 /* Main button */
 .button-main {
-  background-color: #1eafe7;
-  background-image: -webkit-linear-gradient(top, #1eafe7 0, #1a97c8 100%);
-  background-image: linear-gradient(to bottom, #1eafe7 0, #1a97c8 100%);
-  border: 1px solid #117aaa;
+  background-color: #bbb;
+  background-image: -webkit-linear-gradient(top, #bbb 0, #bbb 100%);
+  background-image: linear-gradient(to bottom, #bbb 0, #bbb 100%);
+  border: 1px solid #bbb;
 }
 
 /* Positive button  */
 .button-positive {
-  background-color: #34ba15;
-  background-image: -webkit-linear-gradient(top, #34ba15 0, #2da012 100%);
-  background-image: linear-gradient(to bottom, #34ba15 0, #2da012 100%);
-  border: 1px solid #278f0f;
+  background-color: #aaa;
+  background-image: -webkit-linear-gradient(top, #aaa 0, #aaa 100%);
+  background-image: linear-gradient(to bottom, #aaa 0, #aaa 100%);
+  border: 1px solid #aaa;
 }
 
 /* Negative button  */
 .button-negative {
-  background-color: #e71e1e;
-  background-image: -webkit-linear-gradient(top, #e71e1e 0,#c71a1a 100%);
-  background-image: linear-gradient(to bottom, #e71e1e 0, #c71a1a 100%);
-  border: 1px solid #b51a1a;
+  background-color: #666;
+  background-image: -webkit-linear-gradient(top, #666 0,#666 100%);
+  background-image: linear-gradient(to bottom, #666 0, #666 100%);
+  border: 1px solid #666;
 }
 
 /* Active state for buttons with modifiers */
@@ -797,13 +797,13 @@ select {
   color: #fff;
 }
 .button-main:active {
-  background-color: #0876b1;
+  background-color: #bbb;
 }
 .button-positive:active {
-  background-color: #298f11;
+  background-color: #bbb;
 }
 .button-negative:active {
-  background-color: #b21a1a;
+  background-color: #bbb;
 }
 
 /* Block level buttons (full width buttons) */
@@ -898,16 +898,16 @@ select {
 
 /* Main count  */
 .count-main {
-  background-color: #1eafe7;
-  background-image: -webkit-linear-gradient(top, #1eafe7 0, #1a97c8 100%);
-  background-image: linear-gradient(to bottom, #1eafe7 0, #1a97c8 100%);
+  background-color: #bbb;
+  background-image: -webkit-linear-gradient(top, #bbb 0, #bbb 100%);
+  background-image: linear-gradient(to bottom, #bbb 0, #bbb 100%);
 }
 
 /* Positive count  */
 .count-positive {
-  background-color: #34ba15;
-  background-image: -webkit-linear-gradient(top, #34ba15 0, #2da012 100%);
-  background-image: linear-gradient(to bottom, #34ba15 0, #2da012 100%);
+  background-color: #aaa;
+  background-image: -webkit-linear-gradient(top, #aaa 0, #aaa 100%);
+  background-image: linear-gradient(to bottom, #aaa 0, #aaa 100%);
 }
 
 /* Negative count  */

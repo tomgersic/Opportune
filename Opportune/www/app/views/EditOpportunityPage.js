@@ -81,7 +81,10 @@ app.views.EditOpportunityPage = Backbone.View.extend({
             cacheMode: cacheMode,
             mergeMode: mergeMode,
             success: function() { app.router.navigate(that.backAction, {trigger:true}); },
-            error: function(data, err, options) { that.handleError(new Force.Error(err)); }
+            error: function(data, err, options) { 
+                that.handleError(new Force.Error(err)); 
+                console.log(err);
+            }
         };
     },
 

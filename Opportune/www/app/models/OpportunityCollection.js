@@ -3,7 +3,7 @@
  **/
 app.models.OpportunityCollection = Force.SObjectCollection.extend({
     model: app.models.Opportunity,
-    fieldlist: ["Id", "Name", "Amount", "StageName", "Owner.Name", "LastModifiedBy.Name", "LastModifiedDate"],
+    fieldlist: ["Id", "Name", "Amount", "StageName", "Owner.Name", "LastModifiedBy.Name", "LastModifiedDate","CloseDate"],
     cache: function() { return app.cache},
     cacheForOriginals: function() { return app.cacheForOriginals;},
 

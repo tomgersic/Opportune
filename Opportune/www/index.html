@@ -38,6 +38,7 @@
 			</header>
 			<footer class="bar-footer">
 				<span id="offlineStatus"></span>
+				<span id="bookedButton"></span>
 			</footer>
 
 			<div class="bar-standard bar-header-secondary">
@@ -52,6 +53,11 @@
 		<!-- Online/Offline Toggler Template -->
 		<script id="offline-toggler" type="text/template">
 			<a class="<%= isOnline ? 'button-positive' : 'button-negative' %>"><%= (isOnline ? "Online" : "Offline") %></a>
+		</script>
+
+		<!-- Online/Offline Toggler Template -->
+		<script id="booked-button" type="text/template">
+			<a class="button-positive">Demo</a>
 		</script>
 
 		<!-- Sync Page Template -->
@@ -127,6 +133,11 @@
 							<input type="text" name="StageName" value="<%= StageName %>" />
 							<span class="error" id="opportunityStageNameError" />
 						</div>
+						<div class="input-row" id="opportunityCloseDate">
+							<label>Close Date</label>
+							<input type="text" name="CloseDate" value="<%= CloseDate %>" />
+							<span class="error" id="opportunityCloseDateError" />
+						</div>						
 						<% if (LastModifiedDate) { %>
 						<div class="input-row">
 							<label>Owner</label>
@@ -156,6 +167,7 @@
 		<script src="app/views/OfflineToggler.js"></script>
 		<script src="app/views/SyncPage.js"></script>
 		<script src="app/views/EditOpportunityPage.js"></script>
+		<script src="app/views/BookedButton.js"></script>
 
 		<script src="app/Router.js"></script>
 	</body>

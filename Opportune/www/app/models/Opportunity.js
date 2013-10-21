@@ -5,8 +5,8 @@ app.models.Opportunity = Force.SObject.extend({
     sobjectType: "Opportunity",
     fieldlist: function(method) { 
         return method == "read" 
-            ? ["Id", "Name", "Amount", "StageName", "Owner.Name", "LastModifiedBy.Name", "LastModifiedDate"]
-            : ["Id", "Name", "Amount", "StageName"];
+            ? ["Id", "Name", "Amount", "StageName", "Owner.Name", "LastModifiedBy.Name", "LastModifiedDate","CloseDate"]
+            : ["Id", "Name", "Amount", "StageName","CloseDate"];
     },
     cache: function() { return app.cache;},
     cacheForOriginals: function() { return app.cacheForOriginals;},

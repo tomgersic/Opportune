@@ -59,7 +59,8 @@ app.Router = Backbone.StackRouter.extend({
      * show the Add Opportunity Page
      **/
     addOpportunity: function() {
-        app.editPage.model = new app.models.Opportunity({Id: null});
+        console.log("AddOppty");
+        app.editPage.model = new app.models.Opportunity({Id: null,Amount:0,StageName:null,CloseDate:"2013-12-31"});
         this.slidePage(app.editPage);
     },
 

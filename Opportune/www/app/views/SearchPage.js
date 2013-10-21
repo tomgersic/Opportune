@@ -13,6 +13,7 @@ app.views.SearchPage = Backbone.View.extend({
         console.log("SearchPage Initialize");
         this.listView = new app.views.OpportunityListView({model: this.model});
         this.offlineTogglerView = new app.views.OfflineToggler({model: app.offlineTracker});
+        this.bookedButtonView = new app.views.BookedButton({model: this.model});
     },
 
     render: function(eventName) {
@@ -21,6 +22,8 @@ app.views.SearchPage = Backbone.View.extend({
         $(".search-key", this.el).val(this.model.getCriteria());
         this.offlineTogglerView.setElement($("#offlineStatus", this.el)).render();
         this.listView.setElement($("ul", this.el)).render();
+        this.bookedButtonView.setElement($("#bookedButton",this.el)).render();
+
         return this;
     },
 

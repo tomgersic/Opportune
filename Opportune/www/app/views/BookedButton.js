@@ -38,7 +38,8 @@ app.views.BookedButton = Backbone.View.extend({
         //this.example_queryAll(); // All Query Spec
         //this.example_queryExact(); // Exact Query Spec
         //this.example_queryLike(); // Like Query Spec
-        this.example_querySmart(); // SMART Query Spec
+        //this.example_querySmart(); // SMART Query Spec
+        this.example_queryOppty(); //query a real oppty
     },
 
     //REGISTER A DUMMY SOUP FOR DEMO PURPOSES
@@ -117,7 +118,18 @@ app.views.BookedButton = Backbone.View.extend({
             //close the query cursor
             navigator.smartstore.closeCursor(cursor);            
         });
+    },
 
+    //QUERY A REAL OPPTY
+    example_queryOppty: function(){
+        var querySpec = navigator.smartstore.buildAllQuerySpec("Id", null, 2000);
+        
+        navigator.smartstore.querySoup('opportunities',querySpec, function(cursor) { 
+            console.log(cursor.currentPageOrderedEntries);
+            //close the query cursor
+            navigator.smartstore.closeCursor(cursor);
+            //callback(records);
+        },error); 
     },
 
     error: function(err){

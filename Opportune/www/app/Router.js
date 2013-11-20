@@ -1,5 +1,6 @@
 app.Router = Backbone.StackRouter.extend({
 
+    //URI Routes, like #/list, #/add, etc.                                     
     routes: {
         "": "list",
         "list": "list",

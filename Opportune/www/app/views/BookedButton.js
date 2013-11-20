@@ -33,13 +33,13 @@ app.views.BookedButton = Backbone.View.extend({
             alert(error);
         });
 
-        //this.example_registerSoup(); // Register a Soup
+        this.example_registerSoup(); // Register a Soup
         //this.example_createRecord(); // Create a Record
         //this.example_queryAll(); // All Query Spec
         //this.example_queryExact(); // Exact Query Spec
         //this.example_queryLike(); // Like Query Spec
         //this.example_querySmart(); // SMART Query Spec
-        this.example_queryOppty(); //query a real oppty
+        //this.example_queryOppty(); //query a real oppty
     },
 
     //REGISTER A DUMMY SOUP FOR DEMO PURPOSES
